@@ -1,21 +1,23 @@
 package ru.drobyazko.simpleRestApp.model;
 
-import java.util.Objects;
-
 public class PhoneNumber {
 
-    private final long id;
+    private long userId;
     private String name;
     private String number;
 
-    public PhoneNumber(long id, String name, String number) {
-        this.id = id;
+    public PhoneNumber(long userId, String name, String number) {
+        this.userId = userId;
         this.name = name;
         this.number = number;
     }
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -35,22 +37,9 @@ public class PhoneNumber {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PhoneNumber that = (PhoneNumber) o;
-        return name.equals(that.name) && number.equals(that.number);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, number);
-    }
-
-    @Override
     public String toString() {
         return "PhoneNumber{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", number='" + number + '\'' +
                 '}';
