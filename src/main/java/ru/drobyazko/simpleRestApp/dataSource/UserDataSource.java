@@ -21,13 +21,15 @@ public class UserDataSource {
         return userMap.get(id);
     }
 
-    public void addUser(User user) {
+    public User addUser(User user) {
         userMap.put(userId, user);
         userId++;
+        return user;
     }
 
-    public void editUser(long id, User user) {
+    public User editUser(long id, User user) {
         userMap.replace(id, user);
+        return user;
     }
 
     public void removeUser(long id) {

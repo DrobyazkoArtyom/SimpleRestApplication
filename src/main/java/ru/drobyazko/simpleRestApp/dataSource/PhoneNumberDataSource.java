@@ -21,13 +21,15 @@ public class PhoneNumberDataSource {
         return phoneNumberMap;
     }
 
-    public void addPhoneNumber(PhoneNumber phoneNumber) {
+    public PhoneNumber addPhoneNumber(PhoneNumber phoneNumber) {
         phoneNumberMap.put(phoneNumberId, phoneNumber);
         phoneNumberId++;
+        return phoneNumber;
     }
 
-    public void editPhoneNumber(long id, PhoneNumber phoneNumber) {
+    public PhoneNumber editPhoneNumber(long id, PhoneNumber phoneNumber) {
         phoneNumberMap.replace(id, phoneNumber);
+        return phoneNumber;
     }
 
     public void removePhoneNumber(long id) {

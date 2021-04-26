@@ -6,6 +6,8 @@ public class PhoneNumber {
     private String name;
     private String number;
 
+    private PhoneNumber() { }
+
     public PhoneNumber(long userId, String name, String number) {
         this.userId = userId;
         this.name = name;
