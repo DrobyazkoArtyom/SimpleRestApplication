@@ -28,7 +28,9 @@ public class UserDataSource {
     }
 
     public User editUser(long id, User user) {
-        userMap.replace(id, user);
+        if(userMap.replace(id, user) == null) {
+            return null;
+        }
         return user;
     }
 

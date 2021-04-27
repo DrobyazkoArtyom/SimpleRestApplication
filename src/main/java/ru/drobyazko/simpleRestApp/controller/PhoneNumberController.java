@@ -1,6 +1,7 @@
 package ru.drobyazko.simpleRestApp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.drobyazko.simpleRestApp.model.PhoneNumber;
 import ru.drobyazko.simpleRestApp.service.UserDataService;
@@ -18,28 +19,28 @@ public class PhoneNumberController {
     }
 
     @GetMapping("/phones")
-    Map<Long, PhoneNumber> all() {
-        return userDataService.getAllPhoneNumbers();
+    ResponseEntity<Map<Long, PhoneNumber>> all() {
+        return ResponseEntity.ok(userDataService.getAllPhoneNumbers());
     }
 
     @GetMapping("/phones/{id}")
-    PhoneNumber one(@PathVariable long id) {
-        return userDataService.getPhoneNumber(id);
+    ResponseEntity<PhoneNumber> one(@PathVariable long id) {
+        return ResponseEntity.ok(userDataService.getPhoneNumber(id));
     }
 
-    @GetMapping("/phones/{number}")
-    PhoneNumber findByNumber(@PathVariable String number) {
-        return userDataService.findPhoneEntryByNumber(number);
+    @GetMapping("/phones/findBy{number}")
+    ResponseEntity<PhoneNumber> findByNumber(@PathVariable String number) {
+        return ResponseEntity.ok(userDataService.findPhoneEntryByNumber(number));
     }
 
     @PostMapping("/phones")
-    PhoneNumber newPhoneNumber(@RequestBody PhoneNumber newPhoneNumber) {
-        return userDataService.createPhoneNumber(newPhoneNumber);
+    ResponseEntity<PhoneNumber> newPhoneNumber(@RequestBody PhoneNumber newPhoneNumber) {
+        return ResponseEntity.ok(userDataService.createPhoneNumber(newPhoneNumber));
     }
 
     @PutMapping("/phones/{id}")
-    PhoneNumber replacePhoneNumber(@PathVariable long id, @RequestBody PhoneNumber newPhoneNumber) {
-        return userDataService.editPhoneNumber(id, newPhoneNumber);
+    ResponseEntity<PhoneNumber> replacePhoneNumber(@PathVariable long id, @RequestBody PhoneNumber newPhoneNumber) {
+        return ResponseEntity.ok(userDataService.editPhoneNumber(id, newPhoneNumber));
     }
 
     @DeleteMapping("/phones/{id}")

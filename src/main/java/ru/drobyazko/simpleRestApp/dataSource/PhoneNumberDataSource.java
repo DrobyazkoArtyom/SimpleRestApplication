@@ -28,7 +28,9 @@ public class PhoneNumberDataSource {
     }
 
     public PhoneNumber editPhoneNumber(long id, PhoneNumber phoneNumber) {
-        phoneNumberMap.replace(id, phoneNumber);
+        if(phoneNumberMap.replace(id, phoneNumber) == null) {
+            return null;
+        }
         return phoneNumber;
     }
 
