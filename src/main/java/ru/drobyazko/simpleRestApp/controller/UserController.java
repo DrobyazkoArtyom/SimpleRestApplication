@@ -3,6 +3,7 @@ package ru.drobyazko.simpleRestApp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.drobyazko.simpleRestApp.exceptions.NotFoundException;
 import ru.drobyazko.simpleRestApp.model.PhoneNumber;
 import ru.drobyazko.simpleRestApp.model.User;
 import ru.drobyazko.simpleRestApp.service.UserDataService;
@@ -21,23 +22,35 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    ResponseEntity<Map<Long, User>> all() {
+    ResponseEntity<Map<Long, User>> getAllUsers() {
         return ResponseEntity.ok(userDataService.getAllUsers());
     }
 
     @GetMapping("/users/{id}")
-    ResponseEntity<User> one(@PathVariable long id) {
-        return ResponseEntity.ok(userDataService.getUser(id));
+    ResponseEntity<User> getUserById(@PathVariable long id) {
+        User user = userDataService.getUser(id);
+        if(user == null) {
+            throw new NotFoundException("No user with such id.");
+        }
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/users/findBy{name}")
     ResponseEntity<User> findByName(@PathVariable String name) {
-        return ResponseEntity.ok(userDataService.findUserByName(name));
+        User user = userDataService.findUserByName(name);
+        if(user == null) {
+            throw new NotFoundException("No user with such name.");
+        }
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/users/{id}/phonebook")
     ResponseEntity<List<PhoneNumber>> phoneBook(@PathVariable long id) {
-        return ResponseEntity.ok(userDataService.getUserPhoneBook(id));
+        List<PhoneNumber> userPhoneBook = userDataService.getUserPhoneBook(id);
+        if(userPhoneBook == null) {
+            throw new NotFoundException("No user with such id.");
+        }
+        return ResponseEntity.ok(userPhoneBook);
     }
 
     @PostMapping("/users")
@@ -47,7 +60,11 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     ResponseEntity<User> replaceUser(@PathVariable long id, @RequestBody User newUser) {
-        return ResponseEntity.ok(userDataService.editUser(id, newUser));
+        User user = userDataService.editUser(id, newUser);
+        if(user == null) {
+            throw new NotFoundException("No user with such id.");
+        }
+        return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("/users/{id}")

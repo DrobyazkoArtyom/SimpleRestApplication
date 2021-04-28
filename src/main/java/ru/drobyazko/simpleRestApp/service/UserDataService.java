@@ -78,6 +78,9 @@ public class UserDataService {
     }
 
     public List<PhoneNumber> getUserPhoneBook(long id) {
+        if(!userDataSource.getAll().containsKey(id)) {
+            return null;
+        }
         List<PhoneNumber> userPhoneBook = new ArrayList<>();
         for (Map.Entry<Long, PhoneNumber> entry : phoneNumberDataSource.getAll().entrySet()) {
             PhoneNumber phoneNumber = entry.getValue();
