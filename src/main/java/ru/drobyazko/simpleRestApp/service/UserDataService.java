@@ -1,5 +1,6 @@
 package ru.drobyazko.simpleRestApp.service;
 
+import org.springframework.stereotype.Component;
 import ru.drobyazko.simpleRestApp.dataSource.PhoneNumberDataSource;
 import ru.drobyazko.simpleRestApp.dataSource.UserDataSource;
 import ru.drobyazko.simpleRestApp.model.PhoneNumber;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class UserDataService {
 
     private final UserDataSource userDataSource = new UserDataSource(new HashMap<>());
@@ -23,13 +25,12 @@ public class UserDataService {
         return userDataSource.getUser(id);
     }
 
-    public void createUser(String name) {
-        User newUser = new User(name);
-        userDataSource.addUser(newUser);
+    public User createUser(User newUser) {
+        return userDataSource.addUser(newUser);
     }
 
-    public void editUser(long id, User user) {
-        userDataSource.editUser(id, user);
+    public User editUser(long id, User user) {
+        return userDataSource.editUser(id, user);
     }
 
     public void removeUser(long id) {
@@ -44,13 +45,12 @@ public class UserDataService {
         return phoneNumberDataSource.getAll();
     }
 
-    public void createPhoneNumber(long userId, String name, String number) {
-        PhoneNumber newPhoneNumber = new PhoneNumber(userId, name, number);
-        phoneNumberDataSource.addPhoneNumber(newPhoneNumber);
+    public PhoneNumber createPhoneNumber(PhoneNumber newPhoneNumber) {
+        return phoneNumberDataSource.addPhoneNumber(newPhoneNumber);
     }
 
-    public void editPhoneNumber(long id, PhoneNumber phoneNumber) {
-        phoneNumberDataSource.editPhoneNumber(id, phoneNumber);
+    public PhoneNumber editPhoneNumber(long id, PhoneNumber phoneNumber) {
+        return phoneNumberDataSource.editPhoneNumber(id, phoneNumber);
     }
 
     public void removePhoneNumber(long id) {
@@ -78,6 +78,9 @@ public class UserDataService {
     }
 
     public List<PhoneNumber> getUserPhoneBook(long id) {
+        if(!userDataSource.getAll().containsKey(id)) {
+            return null;
+        }
         List<PhoneNumber> userPhoneBook = new ArrayList<>();
         for (Map.Entry<Long, PhoneNumber> entry : phoneNumberDataSource.getAll().entrySet()) {
             PhoneNumber phoneNumber = entry.getValue();
